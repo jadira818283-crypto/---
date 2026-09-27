@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Информатика: Санау жүйелері - Оқу тренажеры</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            color: #1c1e21;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            background: linear-gradient(135deg, #0d6efd, #0a58ca);
+            color: white;
+            padding: 25px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 1.8em;
+        }
+
+        header p {
+            margin: 0;
+            opacity: 0.95;
+        }
+
+        .topic-selector-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        .topic-selector-box label {
+            font-weight: bold;
+            font-size: 1.05em;
+            color: #0a58ca;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .topic-select {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 1em;
+            border: 2px solid #0d6efd;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            color: #1c1e21;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            background-color: #e4e6eb;
+            color: #050505;
+            font-size: 1em;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background-color: #0d6efd;
+            color: white;
+            box-shadow: 0 2px 8px rgba(13, 110, 253, 0.3);
+        }
+
+        .tab-btn:hover:not(.active) {
+            background-color: #d8dadf;
+        }
+
+        .content-card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            display: none;
+        }
+
+        .content-card.active {
+            display: block;
+        }
+
+        .term-card {
+            border-left: 5px solid #0d6efd;
+            background-color: #f8f9fa;
+            padding: 14px 18px;
+            margin-bottom: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .term-title {
+            font-weight: bold;
+            color: #0a58ca;
+            font-size: 1.05em;
+            margin-bottom: 6px;
+        }
+
+        .question-card {
+            border: 1px solid #e4e6eb;
+            padding: 18px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.05em;
+            margin-bottom: 12px;
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 10px 14px;
+            background-color: white;
+            border: 2px solid #e4e6eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-label:hover {
+            border-color: #0d6efd;
+            background-color: #f0f7ff;
+        }
+
+        .option-label input {
+            margin-right: 12px;
+            width: 16px;
+            height: 16px;
+        }
+
+        code {
+            background-color: #282c34;
+            color: #abb2bf;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: #198754;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: #157347;
+        }
+
+        .result-header {
+            text-align: center;
+            padding: 18px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .score-display {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        .review-card {
+            border: 1px solid #ddd;
+            padding: 14px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+        }
+
+        .review-card.correct {
+            border-left: 5px solid #198754;
+            background-color: #f6fff6;
+        }
+
+        .review-card.incorrect {
+            border-left: 5px solid #dc3545;
+            background-color: #fff6f6;
+        }
+
+        .explanation {
+            margin-top: 8px;
+            padding: 8px 12px;
+            background-color: rgba(0,0,0,0.03);
+            border-radius: 5px;
+            font-size: 0.92em;
+        }
+
+        .restart-btn {
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 1em;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Санау жүйелері: Интерактивті оқу тренажеры</h1>
+        <p>Керекті тақырыпшаны таңдап, теориямен танысыңыз және 30 сұрақтық тест арқылы біліміңізді тексеріңіз</p>
+    </header>
+
+    <!-- ТАҚЫРЫПТЫ ТАҢДАУ -->
+    <div class="topic-selector-box">
+        <label for="topic-select">&#128214; Санау жүйелерінің бөлімін таңдаңыз:</label>
+        <select id="topic-select" class="topic-select" onchange="changeTopic()">
+            <option value="t1">1. Позициялық және позициялық емес санау жүйелері</option>
+            <option value="t2">2. Екілік, сегіздік және он алтылық санау жүйелері</option>
+            <option value="t3">3. Сандарды бір санау жүйесінен екіншісіне ауыстыру (Есептер)</option>
+        </select>
+    </div>
+
+    <!-- ВКЛАДКАЛАР -->
+    <div class="tab-buttons">
+        <button class="tab-btn active" id="tab-theory-btn" onclick="openTab('theory')">1. Ережелер мен Теория</button>
+        <button class="tab-btn" id="tab-test-btn" onclick="openTab('test')">2. Тест (30 Сұрақ)</button>
+        <button class="tab-btn" id="tab-result-btn" onclick="openTab('result')" disabled>3. Нәтиже мен Талдау</button>
+    </div>
+
+    <!-- 1. ТЕОРИЯ БӨЛІМІ -->
+    <div id="theory" class="content-card active">
+        <h2 id="theory-title">Ережелер мен Теориялық материал</h2>
+        <div id="theory-content"></div>
+        <button class="submit-btn" style="background-color: #0d6efd;" onclick="openTab('test')">30 тестік сұрақтарды бастау &rarr;</button>
+    </div>
+
+    <!-- 2. ТЕСТ БӨЛІМІ (30 СҰРАҚ) -->
+    <div id="test" class="content-card">
+        <h2 id="test-title">Тест тапсырмалары</h2>
+        <form id="quiz-form">
+            <div id="quiz-questions-container"></div>
+            <button type="button" class="submit-btn" onclick="finishQuiz()">Тестті аяқтау және нәтижені тексеру</button>
+        </form>
+    </div>
+
+    <!-- 3. НӘТИЖЕЛЕР БӨЛІМІ -->
+    <div id="result" class="content-card">
+        <div id="result-header-box" class="result-header">
+            <h2>Сіздің Нәтижеңіз</h2>
+            <div class="score-display" id="score-text">0 / 30</div>
+            <p id="percentage-text">0%</p>
+        </div>
+
+        <h3>Қателермен жұмыс және талдау:</h3>
+        <div id="review-container"></div>
+
+        <button class="restart-btn" onclick="resetQuiz()">Тестті қайта өту</button>
+    </div>
+</div>
+
+<script>
+    const topicsData = {
+        t1: {
+            title: "Позициялық және позициялық емес санау жүйелері",
+            theory: `
+                <div class="term-card"><div class="term-title">1. Санау жүйесі түсінігі</div><b>Санау жүйесі</b> — сандарды арнайы белгілер (цифрлар) жиынтығы арқылы өрнектеу мен жазудың ережелер жүйесі. Ол екі үлкен топқа бөлінеді: позициялық және позициялық емес.</div>
+                <div class="term-card"><div class="term-title">2. Позициялық емес санау жүйелері</div>Цифрдың мәні оның сандағы орналасқан орнына (позициясына) **байланысты болмайтын** жүйе. Ең айқын мысалы: <b>Рим цифрлары</b> (I, V, X, L, C, D, M). <br>Мысалы: XXX санында X цифры қай жерде турса да 10-ды білдіреді (10+10+10=30).</div>
+                <div class="term-card"><div class="term-title">3. Позициялық санау жүйелері</div>Цифрдың мәні оның санда орналасқан орнына **тікелей байланысты** болатын жүйе. Қазіргі қолданыстағы ондық, екілік, сегіздік, он алтылық жүйелер — позициялық жүйелер болып табылады.<br>Мысалы: 555 санындағы оң жақтағы 5 — бірлікті (5), ортадағы 5 — ондықты (50), сол жақтағы 5 — жүздікті (500) білдіреді.</div>
+                <div class="term-card"><div class="term-title">4. Санау жүйесінің негізі (p)</div>Санау жүйесінде сандарды жазу үшін қолданылатын әртүрлі цифрлардың жалпы саны <b>санау жүйесінің негізі</b> деп аталады. Мысалы, ондық жүйеде негіз p=10 (0,1,2,3,4,5,6,7,8,9).</div>
+            `,
+            questions: [
+                { text: "Санау жүйесі дегеніміз не?", options: ["Сандарды атау мен жазу тәсілдерінің жиынтығы", "Тек компьютерлік программалау тілі", "Калькуляторда есептеу алгоритмі", "Ақпаратты тасымалдау протоколы"], correct: 0, exp: "Санау жүйесі — сандарды арнайы белгілер арқылы жазудың ережелер жүйесі." },
+                { text: "Цифрдың мәні оның сандағы орнына байланысты БОЛМАЙТЫН жүйе:", options: ["Позициялық", "Позициялық емес", "Екілік", "Он алтылық"], correct: 1, exp: "Позициялық емес жүйеде цифр қай орында тұрса да өз мәнін сақтайды." },
+                { text: "Позициялық емес санау жүйесінің ең танымал мысалы:", options: ["Ондық жүйе", "Римдік жүйе", "Екілік жүйе", "Сегіздік жүйе"], correct: 1, exp: "Рим цифрлары (I, V, X, L, C, D, M) позициялық емес жүйеге жатады." },
+                { text: "Позициялық санау жүйелеріне қайсысы жатады?", options: ["Рим жүйесі", "Ондық, екілік, сегіздік жүйелер", "Ежелгі Египет жүйесі", "Ежелгі вавилондық таңбалар"], correct: 1, exp: "Ондық, екілік, 8-дік, 16-лық жүйелерде цифр мәні позицияға байланысты." },
+                { text: "Рим жүйесіндегі 'X' әрпі қай санды білдіреді?", options: ["5", "10", "50", "100"], correct: 1, exp: "Рим таңбаларында X = 10, V = 5, L = 50, C = 100, D = 500, M = 1000." },
+                { text: "Рим жүйесіндегі 'L' таңбасы қандай мәнге ие?", options: ["50", "100", "500", "1000"], correct: 0, exp: "L = 50 мәнін береді." },
+                { text: "Рим жүйесіндегі 'C' таңбасының мәні:", options: ["50", "100", "500", "1000"], correct: 1, exp: "C (Centum) = 100." },
+                { text: "Рим жүйесіндегі 'D' таңбасының мәні:", options: ["50", "100", "500", "1000"], correct: 2, exp: "D = 500." },
+                { text: "Рим жүйесіндегі 'M' таңбасының мәні:", options: ["100", "500", "1000", "5000"], correct: 2, exp: "M (Mille) = 1000." },
+                { text: "Санау жүйесінің негізі (алфавиті) деген не?", options: ["Сандарды жазу үшін қолданылатын әртүрлі цифрлардың жалпы саны", "Қолданылатын ең үлкен санның мәні", "Биттердің жалпы саны", "Жадыдағы ұяшық өлшемі"], correct: 0, exp: "Негіз (p) — осы жүйеде қолданылатын цифрлардың жалпы саны." },
+                { text: "Рим жүйесінде XVI саны ондық жүйеде нешеге тең?", options: ["14", "15", "16", "21"], correct: 2, exp: "X (10) + V (5) + I (1) = 16." },
+                { text: "Рим жүйесінде XIV саны ондық жүйеде нешеге тең?", options: ["14", "16", "24", "115"], correct: 0, exp: "X (10) + (V-I) (4) = 14." },
+                { text: "Рим жүйесінде IX саны нешеге тең?", options: ["11", "9", "6", "10"], correct: 1, exp: "X астынан I азайтылады: 10 - 1 = 9." },
+                { text: "Рим жүйесінде XC саны ондық жүйеде қандай санды береді?", options: ["110", "90", "95", "100"], correct: 1, exp: "C (100) - X (10) = 90." },
+                { text: "Позициялық жүйеде цифрдың разряды қалай өседі?", options: ["Оннан солға қарай", "Солдан оңға қарай", "Кездейсоқ ретпен", "Жоғарыдан төменге"], correct: 0, exp: "Разрядтар оңнан солға қарай өседі (0, 1, 2, ...)." },
+                { text: "Ең кіші позициялық санау жүйесінің негізі нешеге тең?", options: ["0", "1", "2", "10"], correct: 2, exp: "Ең кіші позициялық жүйе — екілік санау жүйесі (негізі 2)." },
+                { text: "Ондық санау жүйесінің алфавитіне қай цифр КІРМЕЙДІ?", options: ["0", "9", "10", "5"], correct: 2, exp: "10 — цифр емес, ол екі цифрдан (1 және 0) тұратын сан." },
+                { text: "Позициялық жүйеде 345 санындағы '3' цифры қай разрядта тұр?", options: ["Бірліктер (0-разряд)", "Ондықтар (1-разряд)", "Жүздіктер (2-разряд)", "МЫңдықтар (3-разряд)"], correct: 2, exp: "5 - 0-разряд, 4 - 1-разряд, 3 - 2-разряд (жүздіктер)." },
+                { text: "Ежелгі Вавилонда қандай санау жүйесі қолданылған?", options: ["Екілік", "Ондық", "Алпыстық (60)", "Он алтылық"], correct: 2, exp: "Ежелгі Вавилонда 60-тық санау жүйесі сақталған (уақыт пен бұрышты өлшеуде әлі бар)." },
+                { text: "Майя цивилизациясы қандай санау жүйесін қолданған?", options: ["Жиырмалық (20)", "Ондық", "Сегіздік", "Екілік"], correct: 0, exp: "Майя үндістері 20-лық санау жүйесін пайдаланған." },
+                { text: "Рим жүйесінде XL саны неге тең?", options: ["60", "40", "50", "45"], correct: 1, exp: "L (50) - X (10) = 40." },
+                { text: "Рим жүйесінде LX саны неге тең?", options: ["60", "40", "50", "65"], correct: 0, exp: "L (50) + X (10) = 60." },
+                { text: "Рим жүйесінде CD саны неге тең?", options: ["600", "400", "500", "450"], correct: 1, exp: "D (500) - C (100) = 400." },
+                { text: "Рим жүйесінде CM саны неге тең?", options: ["1100", "900", "950", "1000"], correct: 1, exp: "M (1000) - C (100) = 900." },
+                { text: "Позициялық санау жүйесінің басты артықшылығы неде?", options: ["Арифметикалық амалдарды орындаудың оңайлығы", "Тек үлкен әріптерді қолдануы", "Таңбалардың көп болуы", "Компьютерге қатысы жоқтығы"], correct: 0, exp: "Позициялық жүйелер арифметикалық есептеулерді жеңілдетеді." },
+                { text: "0 және 1 цифрларынан ғана тұратын жүйе:", options: ["Екілік", "Сегіздік", "Ондық", "Он алтылық"], correct: 0, exp: "Екілік жүйенің негізі 2, цифрлары: 0 және 1." },
+                { text: "Рим жүйесінде 2024 жылы қалай жазылады?", options: ["MMXXIV", "MMXIV", "MMXXVI", "MMDXXIV"], correct: 0, exp: "M (1000) + M (1000) + X (10) + X (10) + IV (4) = MMXXIV." },
+                { text: "Санның ең кіші разряды қай жағында орналасады?", options: ["Сол жақта", "Оң жақта", "Ортасында", "Ретсіз"], correct: 1, exp: "Оң жақтағы ең шеткі цифр — 0-ші (ең кіші) разряд." },
+                { text: "Негізі 'p' болатын позициялық жүйеде ең үлкен цифр неге тең?", options: ["p", "p + 1", "p - 1", "2p"], correct: 2, exp: "Мысалы, 10-дық жүйеде (p=10) ең үлкен цифр: 10 - 1 = 9." },
+                { text: "Сегіздік санау жүйесінде ең үлкен цифр қайсысы?", options: ["8", "7", "9", "6"], correct: 1, exp: "p=8 болғандықтан, цифрлар 0-ден 7-ге дейін барады. Ең үлкені — 7." }
+            ]
+        },
+        t2: {
+            title: "Екілік, сегіздік және он алтылық санау жүйелері",
+            theory: `
+                <div class="term-card"><div class="term-title">1. Екілік санау жүйесі (2-лік)</div>Негізі: <b>2</b>. Қолданылатын цифрлар: <b>0, 1</b>. Computer hardware ақпаратты сақтау мен өңдеуде осы жүйені қолданады (сигнал бар/жоқ).</div>
+                <div class="term-card"><div class="term-title">2. Сегіздік санау жүйесі (8-дік)</div>Негізі: <b>8</b>. Қолданылатын цифрлар: <b>0, 1, 2, 3, 4, 5, 6, 7</b>. 8 санын құрамайды. Екілік кодты қысқаша жазу үшін қолданылады (1 сегіздік цифр = 3 бит/триада).</div>
+                <div class="term-card"><div class="term-title">3. Он алтылық санау жүйесі (16-лық)</div>Негізі: <b>16</b>. Қолданылатын таңбалар: <b>0-ден 9-ға дейінгі цифрлар</b> және латын әріптері: <b>A(10), B(11), C(12), D(13), E(14), F(15)</b>.<br>1 он алтылық цифр = 4 бит (тетрада).</div>
+            `,
+            questions: [
+                { text: "Компьютерде ақпаратты кодтау үшін қай санау жүйесі негізгі болып табылады?", options: ["Ондық", "Екілік", "Сегіздік", "Он алтылық"], correct: 1, exp: "Компьютер схемалары тек екі күйді ұстанады (0 және 1)." },
+                { text: "Сегіздік санау жүйесінің негізі және қолданылатын цифрлары:", options: ["8 (0-ден 8-ге дейін)", "8 (0-ден 7-ге дейін)", "7 (1-ден 7-ге дейін)", "8 (1-ден 8-ге дейін)"], correct: 1, exp: "Сегіздік жүйеде 8 цифр бар: 0, 1, 2, 3, 4, 5, 6, 7." },
+                { text: "Он алтылық санау жүйесінде 'A' әрпі қай санды белгілейді?", options: ["9", "10", "11", "12"], correct: 1, exp: "16-лық жүйеде A=10, B=11, C=12, D=13, E=14, F=15." },
+                { text: "Он алтылық санау жүйесінде 'F' таңбасы неге тең?", options: ["14", "15", "16", "10"], correct: 1, exp: "F — он алтылық жүйедегі ең үлкен цифр, мәні 15." },
+                { text: "Он алтылық санау жүйесінде 'C' әрпі қай санды білдіреді?", options: ["10", "11", "12", "13"], correct: 2, exp: "C таңбасы 12 санын білдіреді." },
+                { text: "Он алтылық санау жүйесінде 'E' әрпі қай санды білдіреді?", options: ["12", "13", "14", "15"], correct: 2, exp: "E таңбасы 14-ке тең." },
+                { text: "Он алтылық санау жүйесінде 'B' әрпі неге тең?", options: ["10", "11", "12", "13"], correct: 1, exp: "B = 11." },
+                { text: "Он алтылық санау жүйесінде 'D' әрпі неге тең?", options: ["11", "12", "13", "14"], correct: 2, exp: "D = 13." },
+                { text: "Қай сан екілік санау жүйесінде ДҰРЫС ЖАЗЫЛҒАН?", options: ["10201", "11011", "12001", "3011"], correct: 1, exp: "Екілік жүйеде тек 0 мен 1 цифрлары ғана болуы керек." },
+                { text: "Қай сан сегіздік санау жүйесінде ҚАТЕ жазылған?", options: ["157", "204", "813", "670"], correct: 2, exp: "Сегіздік жүйеде '8' цифры болмайды." },
+                { text: "Қай сан он алтылық жүйеде жазыла АЛАДЫ?", options: ["19G", "2AF", "100K", "38Z"], correct: 1, exp: "16-лық жүйеде тек A-F аралығындағы әріптер рұқсат етілген." },
+                { text: "Сегіздік жүйенің бір цифры екілік жүйенің неше битіне (триада) сәйкес келеді?", options: ["2 бит", "3 бит", "4 бит", "8 бит"], correct: 1, exp: "2^3 = 8 болғандықтан, 1 сегіздік цифр = 3 бит (триада)." },
+                { text: "Он алтылық жүйенің бір цифры екілік жүйенің неше битіне (тетрада) тең?", options: ["2 бит", "3 бит", "4 бит", "8 бит"], correct: 2, exp: "2^4 = 16 болғандықтан, 1 он алтылық цифр = 4 бит (тетрада)." },
+                { text: "Екілік жүйедегі 1 бит ақпарат қандай мәндерді қабылдайды?", options: ["0 немесе 1", "1 немесе 2", "0, 1, 2", "Кез келген сан"], correct: 0, exp: "1 бит — ең кіші өлшем бірлігі, ол тек 0 не 1 мәнін алады." },
+                { text: "Триада дегеніміз не?", options: ["2 биттік топ", "3 биттік топ", "4 биттік топ", "8 биттік топ"], correct: 1, exp: "Триада — 3 екілік цифрдан тұратын топ." },
+                { text: "Тетрада дегеніміз не?", options: ["2 биттік топ", "3 биттік топ", "4 биттік топ", "8 биттік топ"], correct: 2, exp: "Тетрада — 4 екілік цифрдан (биттен) тұратын топ." },
+                { text: "Он алтылық санау жүйесінің алфавитінде барлығы неше таңба бар?", options: ["10", "15", "16", "12"], correct: 2, exp: "10 цифр (0-9) + 6 әріп (A-F) = 16 таңба." },
+                { text: "Сегіздік санау жүйесінде 77 санынан кейін қандай сан келеді?", options: ["78", "80", "100", "101"], correct: 2, exp: "Сегіздік жүйеде 7-ден кейін разряд өседі: 77_8 + 1_8 = 100_8." },
+                { text: "Екілік жүйеде 11_2 санынан кейін қай сан келеді?", options: ["12", "100", "111", "20"], correct: 1, exp: "11_2 (3) санына 1 қосқанда 100_2 (4) шығады." },
+                { text: "Он алтылық жүйеде 9 санынан кейін қай таңба келеді?", options: ["10", "A", "B", "F"], correct: 1, exp: "16-лық жүйеде 9-дан кейін 10-ды білдіретін 'A' таңбасы келеді." },
+                { text: "Он алтылық жүйеде F санынан кейін қай сан келеді?", options: ["G", "10", "11", "100"], correct: 1, exp: "F (15) кейін разряд ауысып, 10_16 (16) болады." },
+                { text: "Компьютерде HTML түстерін тегістеп жазғанда (мысалы #FFFFFF) қай жүйе қолданылады?", options: ["Екілік", "Ондық", "Он алтылық", "Сегіздік"], correct: 2, exp: "HTML/CSS түс кодтары (#RRGGBB) он алтылық жүйеде жазылады." },
+                { text: "Сегіздік санау жүйесінде ең үлкен екі таңбалы сан:", options: ["88", "77", "99", "78"], correct: 1, exp: "Ең үлкен цифр 7 болғандықтан, ең үлкен екі таңбалы сан — 77_8." },
+                { text: "Он алтылық санау жүйесінде ең үлкен екі таңбалы сан:", options: ["99", "FF", "ZZ", "1616"], correct: 1, exp: "Ең үлкен цифр F (15) болғандықтан, ең үлкен екі таңбалы сан — FF_16 (255_10)." },
+                { text: "Екілік санау жүйесінде ең үлкен үш таңбалы сан:", options: ["111", "999", "222", "100"], correct: 0, exp: "Үш разрядта да ең үлкен екілік цифр 1 тұруы тиіс: 111_2 (7_10)." },
+                { text: "Сегіздік жүйеде 10_8 саны ондық жүйеде неге тең?", options: ["8", "10", "16", "2"], correct: 0, exp: "1*8^1 + 0*8^0 = 8." },
+                { text: "Он алтылық жүйеде 10_16 саны ондық жүйеде неге тең?", options: ["10", "16", "8", "100"], correct: 1, exp: "1*16^1 + 0*16^0 = 16." },
+                { text: "Екілік жүйеде 10_2 саны ондық жүйеде неге тең?", options: ["2", "10", "1", "4"], correct: 0, exp: "1*2^1 + 0*2^0 = 2." },
+                { text: "Сегіздік жүйе не үшін кеңінен қолданылған?", options: ["Екілік кодтарды қысқартып көрсету үшін", "Мәтінді теру үшін", "Дыбысты өңдеу үшін", "Экран рұқсатын арттыру үшін"], correct: 0, exp: "Сегіздік және он алтылық жүйелер ұзын екілік кодты ықшамдап жазуға өте ыңғайлы." },
+                { text: "16-лық жүйедегі 20_16 саны ондық жүйеде неге тең?", options: ["20", "32", "16", "24"], correct: 1, exp: "2 * 16^1 + 0 = 32." }
+            ]
+        },
+        t3: {
+            title: "Сандарды бір санау жүйесінен екіншісіне ауыстыру (Есептер)",
+            theory: `
+                <div class="term-card"><div class="term-title">1. x-тік жүйеден Ондық жүйеге ауыстыру</div>Санның цифрларын оңнан солға қарай 0, 1, 2... дәрежелерімен белгілеп, жайма түрінде жазамыз.<br>Мысалы: 1101_2 = 1*2^3 + 1*2^2 + 0*2^1 + 1*2^0 = 8 + 4 + 0 + 1 = <b>13_10</b>.</div>
+                <div class="term-card"><div class="term-title">2. Ондық жүйеден басқа жүйеге ауыстыру</div>Ондық санды жаңа жүйенің негізіне (2, 8, 16) **бөлгіш қалдығы 0 болғанша немесе бөлінді кішірейгенше бұрыштап бөлеміз**. Қалдықтарды **кері бағытта** жазамыз.</div>
+                <div class="term-card"><div class="term-title">3. Екілік <-> Сегіздік / Он алтылық жылдам ауыстыру</div>
+                • <b>2-ліктен 8-дікке:</b> Оңнан солға қарай 3 биттен (триада) бөліп, әр қайсысын 8-дік цифрға айналдырамыз.<br>
+                • <b>2-ліктен 16-лыққа:</b> Оңнан солға қарай 4 биттен (тетрада) бөліп, 16-лық цифрға айналдырамыз.</div>
+            `,
+            questions: [
+                { text: "Екілік 101_2 санын ондық санау жүйесіне айналдырыңыз:", options: ["5", "6", "7", "4"], correct: 0, exp: "1*2^2 + 0*2^1 + 1*2^0 = 4 + 0 + 1 = 5." },
+                { text: "Екілік 1110_2 санын ондық жүйеге айналдырыңыз:", options: ["12", "14", "15", "10"], correct: 1, exp: "8 + 4 + 2 + 0 = 14." },
+                { text: "Ондық 10 санын екілік санау жүйесіне ауыстырыңыз:", options: ["1010_2", "1100_2", "1001_2", "1110_2"], correct: 0, exp: "10-ды 2-ге бөлгенде қалдықтар кері ретпен: 1010_2." },
+                { text: "Ондық 15 санын екілік санау жүйесіне ауыстырыңыз:", options: ["1111_2", "1110_2", "1001_2", "1101_2"], correct: 0, exp: "15 = 8 + 4 + 2 + 1 = 1111_2." },
+                { text: "Ондық 25 санын екілік жүйеге ауыстырыңыз:", options: ["11001_2", "10011_2", "11101_2", "10101_2"], correct: 0, exp: "25 = 16 + 8 + 1 = 11001_2." },
+                { text: "Сегіздік 17_8 санын ондық жүйеге айналдырыңыз:", options: ["15", "17", "13", "19"], correct: 0, exp: "1*8^1 + 7*8^0 = 8 + 7 = 15." },
+                { text: "Он алтылық 1A_16 санын ондық жүйеге айналдырыңыз:", options: ["26", "16", "20", "10"], correct: 0, exp: "1*16^1 + A(10)*16^0 = 16 + 10 = 26." },
+                { text: "Он алтылық 2F_16 санын ондық жүйеге ауыстырыңыз:", options: ["47", "32", "45", "50"], correct: 0, exp: "2*16 + 15 = 32 + 15 = 47." },
+                { text: "Ондық 16 санын он алтылық жүйеге ауыстырғанда не шығады?", options: ["10_16", "F_16", "16_16", "A_16"], correct: 0, exp: "16 / 16 = 1 (қалдық 0). Кері ретпен: 10_16." },
+                { text: "Ондық 255 санын он алтылық жүйеге ауыстырыңыз:", options: ["FF_16", "FE_16", "100_16", "AA_16"], correct: 0, exp: "255 = 15*16 + 15 = FF_16." },
+                { text: "Екілік 11011_2 санын ондық жүйеге ауыстырыңыз:", options: ["27", "25", "29", "31"], correct: 0, exp: "16 + 8 + 0 + 2 + 1 = 27." },
+                { text: "Екілік 10000_2 санын ондық жүйеге айналдырыңыз:", options: ["16", "8", "32", "10"], correct: 0, exp: "2^4 = 16." },
+                { text: "Екілік 11111111_2 (8 бірлік) санын ондық жүйеге ауыстырыңыз:", options: ["255", "256", "128", "512"], correct: 0, exp: "2^8 - 1 = 255." },
+                { text: "Триада әдісімен екілік 101110_2 санын сегіздік жүйеге айналдырыңыз:", options: ["56_8", "57_8", "46_8", "65_8"], correct: 0, exp: "(101)_2 = 5, (110)_2 = 6. Нәтиже: 56_8." },
+                { text: "Триада әдісімен екілік 111001_2 санын сегіздік жүйеге айналдырыңыз:", options: ["71_8", "73_8", "61_8", "70_8"], correct: 0, exp: "(111)_2 = 7, (001)_2 = 1. Нәтиже: 71_8." },
+                { text: "Тетрада әдісімен екілік 10101100_2 санын он алтылық жүйеге ауыстырыңыз:", options: ["AC_16", "AB_16", "BC_16", "10C_16"], correct: 0, exp: "(1010)_2 = 10 (A), (1100)_2 = 12 (C). Нәтиже: AC_16." },
+                { text: "Тетрада әдісімен екілік 11110001_2 санын он алтылық жүйеге ауыстырыңыз:", options: ["F1_16", "E1_16", "F2_16", "151_16"], correct: 0, exp: "(1111)_2 = 15 (F), (0001)_2 = 1. Нәтиже: F1_16." },
+                { text: "Сегіздік 37_8 санын екілік жүйеге ауыстырыңыз:", options: ["011111_2", "100111_2", "011101_2", "111000_2"], correct: 0, exp: "3 = 011, 7 = 111. Біріктіргенде: 011111_2 (немесе 11111_2)." },
+                { text: "Он алтылық B4_16 санын екілік жүйеге ауыстырыңыз:", options: ["10110100_2", "10100100_2", "11000100_2", "10110011_2"], correct: 0, exp: "B(11) = 1011, 4 = 0100. Нәтиже: 10110100_2." },
+                { text: "Ондық 8 санын екілік жүйеге ауыстырғанда неше бит қажет?", options: ["4 бит (1000_2)", "3 бит", "5 бит", "2 бит"], correct: 0, exp: "8 = 1000_2, бұл 4 битті (орныды) алады." },
+                { text: "Ондық 12 санын сегіздік жүйеге ауыстырыңыз:", options: ["14_8", "12_8", "15_8", "20_8"], correct: 0, exp: "12 = 1*8 + 4 = 14_8." },
+                { text: "Ондық 20 санын сегіздік жүйеге ауыстырыңыз:", options: ["24_8", "20_8", "22_8", "16_8"], correct: 0, exp: "20 / 8 = 2 (қалдық 4) -> 24_8." },
+                { text: "Екілік жүйедегі қосуды орындаңыз: 1_2 + 1_2 = ?", options: ["10_2", "2_2", "11_2", "0_2"], correct: 0, exp: "1 + 1 = 2, ал екілік жүйеде 2 саны 10_2 деп жазылады." },
+                { text: "Екілік жүйедегі қосуды орындаңыз: 10_2 + 11_2 = ?", options: ["101_2", "111_2", "100_2", "110_2"], correct: 0, exp: "2 + 3 = 5_10, ал 5 саны екілікте 101_2 болады." },
+                { text: "Екілік жүйедегі азайтуды орындаңыз: 100_2 - 1_2 = ?", options: ["11_2", "10_2", "01_2", "1_2"], correct: 0, exp: "4_10 - 1_10 = 3_10, ал 3 саны екілікте 11_2 болады." },
+                { text: "Екілік жүйедегі көбейтуді орындаңыз: 101_2 * 10_2 = ?", options: ["1010_2", "1100_2", "1001_2", "1110_2"], correct: 0, exp: "5 * 2 = 10_10, бұл екілік жүйеде 1010_2." },
+                { text: "Сегіздік 10_8 және 20_8 сандарының қосындысы сегіздік жүйеде неге тең?", options: ["30_8", "32_8", "28_8", "40_8"], correct: 0, exp: "10_8 + 20_8 = 30_8." },
+                { text: "Он алтылық A_16 + B_16 қосындысы он алтылық жүйеде неге тең?", options: ["15_16", "21_16", "1F_16", "11_16"], correct: 0, exp: "10 + 11 = 21_10. 21 / 16 = 1 (қалдық 5) -> 15_16." },
+                { text: "Екілік 1000_2 санын 2-ге бөлгенде (оңға 1 битке ығыстыру) не шығады?", options: ["100_2", "10000_2", "110_2", "11_2"], correct: 0, exp: "1000_2 (8) / 2 = 100_2 (4). Екілікте 2-ге бөлу — соңғы 0-ді алып тастаумен тең." },
+                { text: "Ондық 100 санын он алтылық жүйеге ауыстырыңыз:", options: ["64_16", "100_16", "5E_16", "A0_16"], correct: 0, exp: "100 / 16 = 6 (қалдық 4) -> 64_16." }
+            ]
+        }
+    };
+
+    let currentTopicKey = 't1';
+
+    function changeTopic() {
+        currentTopicKey = document.getElementById('topic-select').value;
+        loadTopicData();
+        resetQuiz();
+    }
+
+    function loadTopicData() {
+        const topic = topicsData[currentTopicKey];
+
+        // Теорияны орнату
+        document.getElementById('theory-title').innerText = topic.title + " — Теориялық ережелер";
+        document.getElementById('theory-content').innerHTML = topic.theory;
+
+        // Тест сұрақтарын (30 сұрақ) орнату
+        document.getElementById('test-title').innerText = topic.title + " — 30 Сұрақтық Тест";
+        let questionsHtml = "";
+
+        topic.questions.forEach((q, index) => {
+            let optionsHtml = "";
+            q.options.forEach((opt, optIndex) => {
+                optionsHtml += `
+                    <label class="option-label">
+                        <input type="radio" name="q_${index}" value="${optIndex}">
+                        ${String.fromCharCode(65 + optIndex)}) ${opt}
+                    </label>
+                `;
+            });
+
+            questionsHtml += `
+                <div class="question-card" id="card_${index}">
+                    <div class="question-text">${index + 1}. ${q.text}</div>
+                    <div class="options-group">${optionsHtml}</div>
+                </div>
+            `;
+        });
+
+        document.getElementById('quiz-questions-container').innerHTML = questionsHtml;
+    }
+
+    function openTab(tabName) {
+        document.querySelectorAll('.content-card').forEach(card => card.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+        document.getElementById(tabName).classList.add('active');
+        document.getElementById('tab-' + tabName + '-btn').classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function finishQuiz() {
+        const topic = topicsData[currentTopicKey];
+        let score = 0;
+        let total = topic.questions.length;
+        let reviewHtml = "";
+
+        topic.questions.forEach((q, index) => {
+            let selected = document.querySelector(`input[name="q_${index}"]:checked`);
+            let userAnsIndex = selected ? parseInt(selected.value) : -1;
+            let isCorrect = userAnsIndex === q.correct;
+
+            if (isCorrect) score++;
+
+            let userAnsText = userAnsIndex !== -1 ? q.options[userAnsIndex] : "Жауап таңдалмады";
+            let correctAnsText = q.options[q.correct];
+
+            reviewHtml += `
+                <div class="review-card ${isCorrect ? 'correct' : 'incorrect'}">
+                    <div style="font-weight: bold;">${index + 1}. ${q.text}</div>
+                    <div style="margin-top: 6px;">
+                        Сіздің жауабыңыз: <b>${userAnsText}</b> ${isCorrect ? '&#9989;' : '&#10060;'}
+                    </div>
+                    ${!isCorrect ? `<div style="color: #198754; margin-top: 4px;">Дұрыс жауабы: <b>${correctAnsText}</b></div>` : ''}
+                    <div class="explanation">
+                        <b>Түсініктеме:</b> ${q.exp}
+                    </div>
+                </div>
+            `;
+        });
+
+        let percentage = Math.round((score / total) * 100);
+        document.getElementById('score-text').innerText = `${score} / ${total}`;
+        document.getElementById('percentage-text').innerText = `Көрсеткіш: ${percentage}%`;
+
+        let headerBox = document.getElementById('result-header-box');
+        if (percentage >= 80) {
+            headerBox.style.backgroundColor = "#d1e7dd";
+            headerBox.style.color = "#0f5132";
+        } else if (percentage >= 50) {
+            headerBox.style.backgroundColor = "#fff3cd";
+            headerBox.style.color = "#664d03";
+        } else {
+            headerBox.style.backgroundColor = "#f8d7da";
+            headerBox.style.color = "#842029";
+        }
+
+        document.getElementById('review-container').innerHTML = reviewHtml;
+        document.getElementById('tab-result-btn').disabled = false;
+        openTab('result');
+    }
+
+    function resetQuiz() {
+        document.getElementById('quiz-form').reset();
+        document.getElementById('tab-result-btn').disabled = true;
+        openTab('test');
+    }
+
+    window.onload = function() {
+        loadTopicData();
+    };
+</script>
+
+</body>
+</html>
